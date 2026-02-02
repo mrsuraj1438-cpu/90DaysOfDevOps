@@ -18,11 +18,11 @@ Main Layers of this Architecute is based on A S K H:
 The kernel is the heart of Linux.
 It controls hardware like CPU, memory, and devices.
 All programs talk to hardware through the kernel.
-- User Space
+- **User Space**
 User space is where users and applications run.
 It includes the shell, commands, and programs.
 
--init/systemd
+- **init/systemd**
 Init is the **first process** started by the Linux kernel.
 Modern Linux systems use systemd as the init system; it is the first program started after the Linux kernel.
 systemd always runs as Process ID (PID) 1.
