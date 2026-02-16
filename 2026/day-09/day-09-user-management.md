@@ -63,3 +63,28 @@ Group membership was verified using standard Linux commands.
 - sudo passwd nairobi                               # Set password for nairobi
 - cat /etc/passwd                                 # Verify users in system
 - ls /home                                        # List home directories
+
+### Group Creation and Membership
+- `sudo groupadd developers`                        # Create developers group
+- `sudo groupadd admins`                            # Create admins group
+- `sudo groupadd project-team`                       # Create project-team group
+- `sudo usermod -aG developers tokyo`                 # Add tokyo to developers group
+- `sudo usermod -aG developers,admins berlin`          # Add berlin to developers and admins
+- `sudo usermod -aG admins professor`                  # Add professor to admins group
+- `sudo usermod -aG project-team nairobi`               # Add nairobi to project-team
+- `sudo usermod -aG project-team tokyo`                 # Add tokyo to project-team (supplementary)
+- `id tokyo`                                        # Check groups for tokyo
+- `id berlin`                                        # Check groups for berlin
+- `id professor`                                      # Check groups for professor
+- `id nairobi`                                        # Check groups for nairobi
+- `getent group developers`                           # Verify developers group members
+- `getent group admins`                               # Verify admins group members
+- `getent group project-team`                          # Verify project-team group members
+
+### Shared Directory Setup
+- `sudo mkdir /opt/dev-project`                       # Create directory for developers
+- `sudo chgrp developers /opt/dev-project`             # Change group ownership to developers
+- `sudo chmod 775 /opt/dev-project`                    # Set rwxrwxr-x permissions
+- `sudo mkdir /opt/team-workspace`                     # Create directory for project-team
+- `sudo chgrp project-team /opt/team-workspace`         # Change group ownership to project-team
+- `sudo chmod 775 /opt/team-workspace`                  # Set rwxrwxr-x permissions
