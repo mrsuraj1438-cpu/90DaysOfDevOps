@@ -88,3 +88,17 @@ Group membership was verified using standard Linux commands.
 - `sudo mkdir /opt/team-workspace`                     # Create directory for project-team
 - `sudo chgrp project-team /opt/team-workspace`         # Change group ownership to project-team
 - `sudo chmod 775 /opt/team-workspace`                  # Set rwxrwxr-x permissions
+  
+## How to Delete a User and Group / Verify Users and Groups
+- sudo userdel username – Delete a user from the system.
+- sudo userdel -r username – Delete a user and remove their home directory.
+- sudo groupdel groupname – Delete a group from the system.
+- getent group groupname – Check which users belong to a specific group.
+- id username – View a user’s UID, primary group, and secondary groups.
+- Notes:
+You cannot delete a group if it still has users in it; remove users from the group first.
+
+## What I Learned
+- I learned how to create a user and set a password.
+- I learned how to create a group and add users to it.
+- The main purpose of this exercise was to understand real-world scenarios: in a company, each user may be assigned to different projects or tasks. Today, I learned how user and group management works in practical, real-life situations.
