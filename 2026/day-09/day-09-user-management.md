@@ -47,21 +47,19 @@ Group membership was verified using standard Linux commands.
 
 ---
 
-## Commands Used
-
 ### User Creation & Verification
-whoami                                        # Display current user
-sudo useradd -m tokyo                         # Create user 'tokyo' with home directory
-sudo useradd -m berlin                         # Create user 'berlin' with home directory
-sudo useradd -m professor                       # Create user 'professor' with home directory
-sudo useradd -m nairobi                         # Create user 'nairobi' with home directory
-sudo usermod -s /bin/bash tokyo                  # Set bash as default shell for tokyo
-sudo usermod -s /bin/bash berlin                  # Set bash as default shell for berlin
-sudo usermod -s /bin/bash professor                # Set bash as default shell for professor
-sudo usermod -s /bin/bash nairobi                  # Set bash as default shell for nairobi
-sudo passwd tokyo                               # Set password for tokyo
-sudo passwd berlin                               # Set password for berlin
-sudo passwd professor                             # Set password for professor
-sudo passwd nairobi                               # Set password for nairobi
-cat /etc/passwd                                 # Verify users in system
-ls /home                                        # List home directories
+- whoami                                        # Display current user
+- sudo useradd -m tokyo                         # Create user 'tokyo' with home directory
+- sudo useradd -m berlin                         # Create user 'berlin' with home directory
+- sudo useradd -m professor                       # Create user 'professor' with home directory
+- sudo useradd -m nairobi                         # Create user 'nairobi' with home directory
+- sudo usermod -s /bin/bash tokyo                  # Set bash as default shell for tokyo
+- sudo usermod -s /bin/bash berlin                  # Set bash as default shell for berlin
+- sudo usermod -s /bin/bash professor                # Set bash as default shell for professor
+- sudo usermod -s /bin/bash nairobi                  # Set bash as default shell for nairobi
+- sudo passwd tokyo                               # Set password for tokyo
+- sudo passwd berlin                               # Set password for berlin
+- sudo passwd professor                             # Set password for professor
+- sudo passwd nairobi                               # Set password for nairobi
+- cat /etc/passwd                                 # Verify users in system
+- ls /home                                        # List home directories
