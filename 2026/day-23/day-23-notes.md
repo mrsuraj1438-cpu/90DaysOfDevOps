@@ -174,8 +174,8 @@ Clone your own repository
 Fork someone else’s repository before contributing
 
 Keeping a fork in sync with the original repository
-git clone https://github.com/your-username/project.git
-git remote add upstream https://github.com/original-owner/project.git
-git fetch upstream
-git merge upstream/main
-git push origin main
+- git clone https://github.com/your-username/project.git
+- git remote add upstream https://github.com/original-owner/project.git
+- git fetch upstream
+- git merge upstream/main
+- git push origin main
