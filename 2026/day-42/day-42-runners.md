@@ -240,12 +240,22 @@ Job will run on correct machine.
 
 ---
 
-# Result
+# Task 6 – GitHub-Hosted vs Self-Hosted Runners
 
-After completing Tasks 1–5:
+| Feature               | GitHub-Hosted                       | Self-Hosted                        |
+|-----------------------|------------------------------------|-----------------------------------|
+| Who manages it?       | Managed by GitHub                  | Managed by user                   |
+| Cost                  | Free with limited minutes, extra paid | You pay for your own server      |
+| Pre-installed tools   | Many tools already installed       | Need to install manually          |
+| Good for              | Quick CI/CD and small projects     | Custom environment and heavy builds |
+| Security concern      | Code runs on GitHub cloud          | You must secure your own machine  |
 
-* Jobs ran on Ubuntu, Windows, macOS GitHub-hosted runners
-* Checked pre-installed tools
-* Configured self-hosted runner
-* Ran jobs on personal machine
-* Added labels to select correct runner
+## ✅ Result
+
+After completing Day 42:
+
+- Jobs ran on Ubuntu, Windows, and macOS runners
+- Checked pre-installed tools
+- Set up a self-hosted runner
+- Ran jobs on personal machine
+- Used labels to select the correct runner
