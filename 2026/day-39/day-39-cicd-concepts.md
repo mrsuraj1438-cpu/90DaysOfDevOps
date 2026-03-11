@@ -116,8 +116,6 @@ GitHub Repository
 Staging Server
 ```
 
-*(You can also draw this by hand and photograph it.)*
-
 ---
 
 ## 6. Challenge Task 5 – Explore in the Wild (Real Example)
