@@ -2,11 +2,11 @@
 
 ## Overview
 
-In GitHub Actions every job needs a machine to run. That machine is called a **runner**.
+Every job in GitHub Actions needs a machine called a **runner** to run the workflow steps.
 There are two types of runners:
 
-1. GitHub-hosted runner (provided by GitHub)
-2. Self-hosted runner (our own machine)
+1. **GitHub-hosted runner** – provided by GitHub
+2. **Self-hosted runner** – your own machine or server
 
 ---
 
@@ -14,7 +14,7 @@ There are two types of runners:
 
 ## Workflow with 3 jobs on different OS
 
-We run jobs on these operating systems:
+We run jobs on:
 
 * ubuntu-latest
 * windows-latest
@@ -28,7 +28,7 @@ Each job prints:
 
 ### Ubuntu Runner
 
-```yaml
+```yaml id="ubuntu-job"
 runs-on: ubuntu-latest
 steps:
   - name: Display runner info
@@ -40,7 +40,7 @@ steps:
 
 ### Windows Runner
 
-```yaml
+```yaml id="windows-job"
 runs-on: windows-latest
 steps:
   - name: Print Windows info
@@ -52,7 +52,7 @@ steps:
 
 ### macOS Runner
 
-```yaml
+```yaml id="macos-job"
 runs-on: macos-latest
 steps:
   - name: Print macOS info
@@ -62,36 +62,32 @@ steps:
       echo "Current User: $(whoami)"
 ```
 
-All three jobs run **at the same time (parallel)** in GitHub Actions.
+All three jobs run **in parallel**.
 
 ---
 
 ## What is a GitHub-Hosted Runner?
 
-A **GitHub-hosted runner** is a virtual machine given by GitHub to run our workflow jobs.
-
-When workflow starts, GitHub creates a temporary machine.
-The job runs on that machine.
-After the job finishes, the machine is deleted automatically.
+A **GitHub-hosted runner** is a virtual machine given by GitHub to run your workflow jobs.
+GitHub automatically creates a temporary machine, runs your jobs, and deletes it after the workflow ends.
 
 ### Who manages it?
 
-GitHub manages everything:
+GitHub manages:
 
-* server
-* operating system
-* updates
-* security
+* the server
+* the operating system
+* updates and security
 
-Developers only write workflow files.
+Developers just write workflows.
 
 ---
 
 # Task 2 – Explore Pre-installed Tools
 
-On `ubuntu-latest` runner we checked versions of some tools.
+On `ubuntu-latest` runner we checked software versions:
 
-```yaml
+```yaml id="preinstalled-tools"
 - name: Print software versions
   run: |
     echo "Docker version: $(docker --version)"
@@ -100,99 +96,58 @@ On `ubuntu-latest` runner we checked versions of some tools.
     echo "Git version: $(git --version)"
 ```
 
-GitHub runners already have many tools installed like:
+GitHub runners already have many tools installed:
 
-* Docker
-* Python
-* Node.js
-* Git
+* Docker, Python, Node.js, Git, Java, .NET, etc.
+
+You can check full list in GitHub docs.
 
 ---
 
 ## Why pre-installed tools are useful?
 
-Because:
-
-* we do not need to install tools every time
-* workflow runs faster
-* setup becomes easier
-
-If tools were not installed, we would need to install them in every workflow run.
+* Saves time – no need to install every tool manually
+* Workflow runs faster
+* Makes setup easy
+* Builds are more reliable
 
 ---
 
 # Task 3 – Set Up a Self-Hosted Runner
 
-A **self-hosted runner** means a machine owned by us that runs GitHub Actions jobs.
+A **self-hosted runner** is your own machine (laptop, server, or cloud VM) that can run GitHub Actions jobs.
 
-It can be:
+### Why use self-hosted runner?
 
-* our laptop
-* a server
-* a cloud VM
-
-### Why we use self-hosted runners?
-
-Sometimes we need our own machine because:
-
-* we need special software
-* we need more CPU or RAM
-* job needs access to private network
-* long running jobs
-* cheaper than GitHub minutes
+* Need special software
+* More CPU/RAM for heavy jobs
+* Access to private network
+* Long running jobs
+* Cheaper than GitHub minutes
 
 ---
 
-## Steps to Configure Self-Hosted Runner
+### Steps to Configure Self-Hosted Runner
 
-Go to:
-
-Repository → **Settings → Actions → Runners → New self-hosted runner**
-
+Go to **Settings → Actions → Runners → New self-hosted runner** in your repo.
 Choose **Linux**.
 
-Then run these commands on your machine.
+On your machine:
 
-### Step 1 – Create folder
-
-```bash
+```bash id="selfhosted-setup"
 mkdir actions-runner
 cd actions-runner
-```
-
-### Step 2 – Download runner
-
-```bash
 curl -o actions-runner-linux-x64.tar.gz -L https://github.com/actions/runner/releases/download/v2.332.0/actions-runner-linux-x64-2.332.0.tar.gz
-```
-
-### Step 3 – Extract files
-
-```bash
 tar xzf actions-runner-linux-x64.tar.gz
-```
-
-### Step 4 – Configure runner
-
-```bash
 ./config.sh --url https://github.com/your-repo-url --token YOUR_TOKEN
-```
-
-### Step 5 – Start runner
-
-```bash
 ./run.sh
 ```
 
-After running this command, the runner appears in GitHub with a **green dot** and **Idle status**.
+After this, your runner shows **green dot and Idle status** in GitHub.
 
----
+#### Restarting the Runner Later
 
-### Start runner again later
-
-If the runner stops, run:
-
-```bash
+```bash id="selfhosted-restart"
 cd actions-runner
 ./run.sh
 ```
@@ -203,7 +158,7 @@ cd actions-runner
 
 Example workflow:
 
-```yaml
+```yaml id="selfhosted-job"
 name: Self Hosted Test
 
 on: push
@@ -219,70 +174,78 @@ jobs:
       - name: Print working directory
         run: pwd
 
-      - name: Create file
+      - name: Create a file
         run: echo "Hello from self hosted runner" > test-file.txt
 ```
 
-After the workflow finishes, the file **test-file.txt** will be created on the machine where the runner is running.
+After running, **test-file.txt** appears on your machine.
 
 ---
 
 # Task 5 – Labels
 
-We can add labels to runners.
+Labels help select the right runner when multiple self-hosted runners exist.
 
-Example label:
+### Step 1 – Add label
 
-```
-my-linux-runner
-```
+Go to:
 
-Update workflow:
+**Actions tab → Settings → Runners → Click your runner → Settings icon → Add label**
 
-```yaml
+Example label: `my-linux-runner`
+
+### Step 2 – Update workflow
+
+```yaml id="label-workflow"
 runs-on: [self-hosted, my-linux-runner]
 ```
+
+Trigger workflow – job runs on the correct runner.
 
 ---
 
 ## Why labels are useful?
 
-When we have many self-hosted runners, labels help us select the correct machine.
+* Easy to choose the right runner
+* Helps when runners have different OS or purposes
+* Without labels, it’s hard to remember which runner is Linux, Windows, or macOS
 
-Example:
+### Example Scenario
 
-Linux machine → `linux-runner`
-Windows machine → `windows-runner`
-macOS machine → `macos-runner`
+Multiple self-hosted runners:
+
+* Runner 1 → Linux → label: `linux-runner`
+* Runner 2 → Windows → label: `windows-runner`
+* Runner 3 → macOS → label: `macos-runner`
 
 Workflow example:
 
-```yaml
-runs-on: [self-hosted, linux-runner]
+```yaml id="label-example"
+jobs:
+  build:
+    runs-on: [self-hosted, linux-runner]
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Running on Linux self-hosted runner"
 ```
 
-This makes sure the job runs on the correct machine.
+If job needs Windows, use:
 
----
+```yaml
+runs-on: [self-hosted, windows-runner]
+```
 
-# Task 6 – GitHub-Hosted vs Self-Hosted
-
-| Feature             | GitHub-Hosted                    | Self-Hosted                         |
-| ------------------- | -------------------------------- | ----------------------------------- |
-| Who manages it?     | Managed by GitHub                | Managed by user                     |
-| Cost                | Free limited minutes, extra paid | You pay for your own server         |
-| Pre-installed tools | Many tools already installed     | Need to install manually            |
-| Good for            | Quick CI/CD and small projects   | Custom environment and heavy builds |
-| Security concern    | Code runs on GitHub cloud        | You must secure your own machine    |
+Job will run on correct machine.
 
 ---
 
 # Result
 
-After completing Day 42:
+After completing Tasks 1–5:
 
-* Jobs ran on **Ubuntu, Windows and macOS runners**
+* Jobs ran on Ubuntu, Windows, macOS GitHub-hosted runners
 * Checked pre-installed tools
-* Set up a **self-hosted runner**
+* Configured self-hosted runner
 * Ran jobs on personal machine
-* Used labels to select the correct runner
+* Added labels to select correct runner
