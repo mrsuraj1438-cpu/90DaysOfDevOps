@@ -119,7 +119,7 @@ Staging Server
 Here’s the hand-drawn CI/CD pipeline:
 
 ```
-Here’s a diagram above workflow:
+#Here’s a diagram above workflow:
 
 ![CI/CD Diagram](diagram.png)
 
