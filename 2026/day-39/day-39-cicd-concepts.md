@@ -116,34 +116,42 @@ GitHub Repository
 Staging Server
 ```
 
+*(You can also draw this by hand and photograph it.)*
+
 ---
 
-## 6. Challenge Task 5 – Explore in the Wild (Real Example)
+## 6. Challenge Task 5 – Explore in the Wild
 
-**Repository Chosen:** FastAPI GitHub Actions CI/CD Demo (berkecengiz/fastapi-github-actions-ci-demo)
+### Real Example — FastAPI GitHub Actions
 
-**Workflow File:** `.github/workflows/ci.yml`
+Here’s a real GitHub Actions workflow from the `.github/workflows/ci.yml` file in the **berkecengiz/fastapi-github-actions-ci-demo** project on GitHub.
+
+This workflow automates a CI/CD pipeline for a FastAPI app.
 
 **What triggers it?**
 
-* Push to the `main` branch
-* Pull request targeting the `main` branch
+* Pushes code to the `main` branch
+* Creates a pull request targeting the `main` branch
+
+This is defined in the `on:` section of the YAML file.
 
 **How many jobs does it have?**
 
-* 4 jobs:
+* The workflow runs **four jobs**:
 
-  1. Lint & Format (checks code style)
-  2. Security Scan (checks for vulnerabilities)
-  3. Run Tests (automated test suite)
-  4. Build Docker Image (builds the container)
+  1. Lint & Format (checks code styling)
+  2. Security Scan (scans code for vulnerabilities)
+  3. Run Tests (runs the test suite)
+  4. Build Docker Image (builds a Docker container)
 
 **What does it do? (best guess/explanation)**
 
-* Ensures code is formatted correctly
-* Scans for security issues
-* Runs all automated tests
-* Builds a Docker image ready for deployment
+* Ensures code formatting is correct before merging
+* Checks for security vulnerabilities
+* Runs automated tests on multiple Python versions
+* Builds a Docker image successfully
+
+If any job fails, the workflow stops and errors are visible in the Actions tab, so problems can be fixed before merging.
 
 **Visual flow (text-based):**
 
@@ -172,6 +180,82 @@ GitHub Actions workflow starts
    Docker image ready for deployment
 ```
 
+### Example YAML File for Task 5
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lint-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install code format tools
+        run: |
+          pip install black isort
+      - name: Check formatting
+        run: |
+          black --check .
+          isort --check-only .
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install Bandit
+        run: pip install bandit
+      - name: Run security scan
+        run: bandit -r .
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: pytest --cov=app
+
+  build-docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker build -t my-fastapi-app .
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+      - name: Push Docker image
+        run: |
+          docker tag my-fastapi-app:latest mydockerhubuser/my-fastapi-app:latest
+          docker push mydockerhubuser/my-fastapi-app:latest
+```
+
 ---
 
 ## 7. CI/CD Stages Summary
@@ -190,6 +274,6 @@ All connected by triggers, jobs, steps, runners, and artifacts.
 
 ---
 
-## 9. Today I Learned 
+## 9. Today I Learned (TIL)
 
 Today I learned that CI/CD pipelines help teams automatically build, test, and deploy code safely and quickly, catching errors early, and making development faster and more reliable.
