@@ -1,6 +1,6 @@
 # Day 44 – Secrets, Artifacts & Running Real Tests in CI
 
-## Overview
+## Overview the 
 
 Today the CI pipeline performs real tasks such as storing sensitive data securely, saving important files created during the pipeline, and running real scripts/tests automatically.
 
