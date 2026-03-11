@@ -119,10 +119,14 @@ Staging Server
 Here’s the hand-drawn CI/CD pipeline:
 
 ```
-#Here’s a diagram above workflow:
+
+### Hand-Drawn CI/CD Diagram
+
+Here’s the hand-drawn style illustration of the same pipeline:
 
 ![CI/CD Diagram](diagram.png)
 
+*Figure: Hand-drawn CI/CD pipeline showing Test, Build, and Deploy stages ending at the Staging Server.*
 ---
 
 ## 6. Challenge Task 5 – Explore in the Wild
