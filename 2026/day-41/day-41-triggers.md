@@ -72,8 +72,6 @@ GitHub Actions link workflows to PRs when they are triggered by `on: pull_reques
 * Status ✅/❌/⏳
 * Logs showing PR number, source branch, target branch
 
-**Today I learned:** Workflows can automatically run on PRs and show results directly on the PR page.
-
 ---
 
 # Task 2 – Scheduled Trigger
@@ -101,8 +99,6 @@ jobs:
 
 * Cron for **every Monday at 9 AM UTC:** `0 9 * * 1`
 * For 9 AM IST → convert to UTC: 3:30 UTC
-
-**Today I learned:** I can schedule workflows to run automatically using cron syntax.
 
 ---
 
@@ -140,8 +136,6 @@ steps:
 ```
 
 4. **Push workflow** → go to **Actions tab → Run workflow manually** → enter input → see printed value
-
-**Today I learned:** I can trigger workflows manually and pass values like staging or production.
 
 ---
 
@@ -185,8 +179,6 @@ steps:
 
 5. **Push workflow** → 6 jobs run in parallel (3 Python × 2 OS)
 
-**Today I learned:** Matrix lets me run the same job in multiple environments automatically.
-
 ---
 
 # Task 5 – Exclude & Fail-Fast
@@ -216,19 +208,12 @@ fail-fast: false
 * `fail-fast: true` → stops all jobs if one fails
 * `fail-fast: false` → all jobs run even if one fails
 
-**Today I learned:** I can skip certain combinations and control whether workflow stops on failure.
-
 ---
 
-# Result
+# Today I Learned
 
-After Day 41:
-
-* Learned **PR triggers**, **scheduled triggers**, and **manual triggers**
-* Learned how to **run matrix builds** for multiple Python versions and OS
-* Learned how to **exclude combinations** and control fail-fast behavior
-* Workflows now more automated, flexible, and beginner-friendly
-
----
-
-This file is ready to save as `day-41-triggers.md`.
+- Workflows can automatically run on PRs and show results directly on the PR page.  
+- I can schedule workflows to run automatically using cron syntax.  
+- I can trigger workflows manually and pass values like staging or production.  
+- Matrix lets me run the same job in multiple environments automatically.  
+- I can skip certain combinations and control whether workflow stops on failure.  
