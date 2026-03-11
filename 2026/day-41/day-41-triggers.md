@@ -1,222 +1,234 @@
-Day 41 – Triggers & Matrix Builds
+# Day 41 – Triggers & Matrix Builds
 
-This task focuses on learning different ways to trigger GitHub Actions workflows and how to run jobs across multiple environments using Matrix builds.
+## Overview
 
-Challenge Tasks
-Task 1: Trigger on Pull Request
-Step 1: Create Workflow File
+Today I learned how to trigger workflows in different ways and how to run jobs across multiple environments using a matrix.
 
-Create the workflow file:
+---
 
+# Task 1 – Trigger on Pull Request
+
+**Goal:** Run a workflow whenever a pull request (PR) is opened or updated against the `main` branch.
+
+**Steps:**
+
+1. **Create the workflow file**
+
+```bash id="create-pr-yml"
 touch .github/workflows/pr-check.yml
+```
 
-Edit the file:
+2. **Edit the workflow file**
 
+```bash id="edit-pr-yml"
 vi .github/workflows/pr-check.yml
-Step 2: Trigger Only When PR Targets main
+```
+
+3. **Trigger only on PR to main**
+
+```yaml id="pr-trigger"
 on:
   pull_request:
     branches:
       - main
+```
 
-This configuration ensures the workflow runs only when a pull request is opened or updated against the main branch.
+4. **Add steps to print PR info**
 
-Step 3: Print Pull Request Information
-
-Add the following step:
-
+```yaml id="pr-steps"
 steps:
   - name: Print PR info
     run: |
       echo "PR number is ${{ github.event.pull_request.number }}"
       echo "Source branch for PR: ${{ github.head_ref }}"
       echo "Target branch for PR: ${{ github.base_ref }}"
+```
 
-Explanation:
+5. **Add, commit, and push workflow**
 
-github.event.pull_request.number → Shows the PR number
-
-github.head_ref → Shows the source branch
-
-github.base_ref → Shows the target branch
-
-Step 4: Add, Commit, and Push Workflow
+```bash id="git-commands"
 git add .github/workflows/pr-check.yml
 git commit -m "Add PR check workflow"
-git push origin main
-Step 5: Create a Branch and Open a PR
+git push -u origin main
+```
+
+6. **Create a new branch and push**
+
+```bash id="new-branch"
 git checkout -b feat/merge
 git add .
 git commit -m "Add changes"
 git push origin feat/merge
+```
 
-Then open a Pull Request from feat/merge → main.
+7. **Open a Pull Request** from the new branch → workflow runs automatically
 
-Why It Shows on the PR Page
+**Why it shows up on the PR page:**
+GitHub Actions link workflows to PRs when they are triggered by `on: pull_request`.
 
-GitHub Actions workflows run automatically when specific events occur.
+**What you see:**
 
-Your workflow trigger:
+* Workflow name
+* Status ✅/❌/⏳
+* Logs showing PR number, source branch, target branch
 
-on:
-  pull_request:
-    branches:
-      - main
+**Today I learned:** Workflows can automatically run on PRs and show results directly on the PR page.
 
-This means:
+---
 
-Run this workflow whenever a pull request is opened or updated targeting the main branch.
+# Task 2 – Scheduled Trigger
 
-GitHub automatically connects the workflow run to the PR.
+**Goal:** Run a workflow automatically on a schedule using cron.
 
-What You See on the PR Page
+**Steps:**
 
-When the workflow runs, GitHub shows a Checks section on the PR page.
-
-You can see:
-
-Workflow name
-
-Status (Running / Success / Failed)
-
-Logs for each step
-
-Example logs:
-
-PR number is 2
-Source branch for PR: feature/pr-test
-Target branch for PR: main
-Task 2: Scheduled Trigger
-
-A workflow can run automatically using a cron schedule.
-
-Example: Run every day at midnight (UTC)
+```yaml id="schedule-yml"
+name: Daily Workflow
 
 on:
   schedule:
-    - cron: "0 0 * * *"
-Cron Expression for Every Monday at 9 AM
-0 9 * * 1
+    - cron: "0 0 * * *"  # every day at midnight UTC
 
-Cron format:
+jobs:
+  schedule-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: say hi
+        run: echo "Scheduled workflow running"
+```
 
-minute hour day-of-month month day-of-week
+**Notes:**
 
-Explanation:
+* Cron for **every Monday at 9 AM UTC:** `0 9 * * 1`
+* For 9 AM IST → convert to UTC: 3:30 UTC
 
-0 → minute
+**Today I learned:** I can schedule workflows to run automatically using cron syntax.
 
-9 → hour
+---
 
-* → every day of month
+# Task 3 – Manual Workflow Trigger
 
-* → every month
+**Goal:** Trigger a workflow manually from the Actions tab with user input.
 
-1 → Monday
+**Steps:**
 
-Task 3: Manual Workflow Trigger
+1. **Create the workflow file**
 
-The goal is to run a workflow manually from the GitHub Actions tab.
-
-Step 1: Create Workflow File
+```bash id="manual-yml"
 touch .github/workflows/manual.yml
-Step 2: Add Manual Trigger
+```
+
+2. **Edit the workflow file**
+   Add `workflow_dispatch` and an input for environment:
+
+```yaml id="manual-trigger"
 on:
   workflow_dispatch:
     inputs:
       environment:
         description: "Choose environment (staging or production)"
         required: true
-        default: "staging"
-Step 3: Print Input Value
+        default: staging
+```
+
+3. **Add a step to print input value**
+
+```yaml id="manual-step"
 steps:
   - name: Print environment
     run: echo "Selected environment is ${{ github.event.inputs.environment }}"
-Step 4: Run Workflow Manually
+```
 
-Go to GitHub Repository
+4. **Push workflow** → go to **Actions tab → Run workflow manually** → enter input → see printed value
 
-Click Actions tab
+**Today I learned:** I can trigger workflows manually and pass values like staging or production.
 
-Select the workflow
+---
 
-Click Run workflow
+# Task 4 – Matrix Builds
 
-Enter the environment name
+**Goal:** Run the same job multiple times using different Python versions and OS.
 
-Example output:
+**Steps:**
 
-Selected environment is staging
-Task 4: Matrix Builds
+1. **Create workflow file**
 
-Matrix builds allow running the same job with multiple configurations.
-
-Step 1: Create Workflow File
+```bash id="matrix-yml"
 touch .github/workflows/matrix.yml
-Step 2: Define Python Matrix
+```
+
+2. **Define matrix strategy**
+
+```yaml id="matrix-strategy"
 strategy:
   matrix:
     python-version: ["3.10", "3.11", "3.12"]
-Step 3: Run Job
-runs-on: ubuntu-latest
+    os: ["ubuntu-latest", "windows-latest"]
+```
 
-Install Python and print version:
+3. **Run job on a specific OS**
 
+```yaml id="matrix-job"
+runs-on: ${{ matrix.os }}
+```
+
+4. **Add steps to install Python and print version**
+
+```yaml id="matrix-steps"
 steps:
+  - uses: actions/checkout@v4
   - uses: actions/setup-python@v4
     with:
       python-version: ${{ matrix.python-version }}
-
   - run: python --version
+```
 
-Result:
+5. **Push workflow** → 6 jobs run in parallel (3 Python × 2 OS)
 
-3 jobs run in parallel:
+**Today I learned:** Matrix lets me run the same job in multiple environments automatically.
 
-Python 3.10
+---
 
-Python 3.11
+# Task 5 – Exclude & Fail-Fast
 
-Python 3.12
+**Goal:** Exclude one combination from matrix and set `fail-fast` behavior.
 
-Extend Matrix with Operating Systems
-matrix:
-  os: ["ubuntu-latest", "windows-latest"]
-  python-version: ["3.10", "3.11", "3.12"]
-Total Jobs
-2 OS × 3 Python versions = 6 Jobs
-Task 5: Exclude & Fail-Fast
-Exclude Specific Combination
+**Steps:**
 
-Example: Exclude Python 3.10 on Windows
+1. **Add exclude section**
 
-matrix:
-  os: ["ubuntu-latest", "windows-latest"]
-  python-version: ["3.10", "3.11", "3.12"]
-  exclude:
-    - os: windows-latest
-      python-version: "3.10"
-Disable Fail-Fast
-strategy:
-  fail-fast: false
-Fail-Fast Explanation
-fail-fast: true (Default)
+```yaml id="exclude-matrix"
+exclude:
+  - os: windows-latest
+    python-version: 3.10
+```
 
-If one job fails, the remaining jobs are cancelled immediately.
+2. **Set fail-fast**
 
-Example:
-
-Job1 → Failed
-Job2 → Cancelled
-Job3 → Cancelled
+```yaml id="failfast"
 fail-fast: false
+```
 
-If one job fails, other jobs continue running.
+3. **Push workflow** → if one job fails, others continue
 
-Example:
+**Notes:**
 
-Job1 → Failed
-Job2 → Success
-Job3 → Success
+* `fail-fast: true` → stops all jobs if one fails
+* `fail-fast: false` → all jobs run even if one fails
 
-This helps you see all test results instead of stopping early.
+**Today I learned:** I can skip certain combinations and control whether workflow stops on failure.
+
+---
+
+# Result
+
+After Day 41:
+
+* Learned **PR triggers**, **scheduled triggers**, and **manual triggers**
+* Learned how to **run matrix builds** for multiple Python versions and OS
+* Learned how to **exclude combinations** and control fail-fast behavior
+* Workflows now more automated, flexible, and beginner-friendly
+
+---
+
+This file is ready to save as `day-41-triggers.md`.
