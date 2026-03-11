@@ -114,6 +114,12 @@ GitHub Repository
    |
    v
 Staging Server
+# CI/CD Pipeline
+
+Here’s the hand-drawn CI/CD pipeline:
+
+![CI/CD Diagram](digram.png)
+
 ```
 
 ---
