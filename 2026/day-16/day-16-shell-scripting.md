@@ -47,6 +47,8 @@ chmod +x hello.sh
 Hello, DevOps!
 ```
 
+![Task 1 Output](task1.png)
+
 ### What I learned
 
 If we remove `#!/bin/bash`, the script may not run correctly because system may not know which shell to use.
@@ -69,6 +71,8 @@ echo "Hello, I am $NAME and I am a $ROLE"
 ```
 Hello, I am Suraj and I am a DevOps Engineer
 ```
+
+![Task 2 Output](task2.png)
 
 ### What I learned
 
@@ -100,6 +104,8 @@ Enter your favourite tool:
 Docker
 Hello Suraj, your favourite tool is Docker
 ```
+
+![Task 3 Output](task3.png)
 
 ### What I learned
 
@@ -137,6 +143,10 @@ else
 fi
 ```
 
+### Output
+
+![Task 4 Output](task4.png)
+
 ### What I learned
 
 - `if-else` helps to make decisions in scripts
@@ -163,6 +173,10 @@ else
     echo "Skipped"
 fi
 ```
+
+### Output
+
+![Task 5 Output](task5.png)
 
 ### What I learned
 
