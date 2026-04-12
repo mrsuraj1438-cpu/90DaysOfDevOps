@@ -1,115 +1,178 @@
 # Day 16 – Shell Scripting Basics
 
-## Task
-Start your shell scripting journey — learn the fundamentals every script needs.
+## Overview (What I learned today)
 
-You will:
-- Understand **shebang** (`#!/bin/bash`) and why it matters
-- Work with **variables**, **echo**, and **read**
-- Write basic **if-else** conditions
+Today I learned the basics of Shell Scripting.
+Shell scripting helps us run Linux commands in an automatic way. Instead of typing commands again and again, we can write a script and run it anytime.
 
 ---
 
-## Expected Output
-- A markdown file: `day-16-shell-scripting.md`
-- All scripts you write during the tasks
+## Why we use Shell Scripting
+
+We use shell scripting because:
+- It saves time
+- It reduces manual work
+- It automates repeated tasks
+- It is very useful in DevOps and system administration
 
 ---
 
-## Challenge Tasks
+## How Shell Script Works
 
-### Task 1: Your First Script
-1. Create a file `hello.sh`
-2. Add the shebang line `#!/bin/bash` at the top
-3. Print `Hello, DevOps!` using `echo`
-4. Make it executable and run it
+- We write commands in a file with `.sh` extension
+- The system reads and runs line by line
+- The `#!/bin/bash` tells which shell should run the script
+
+---
+
+## Task 1: First Script
+
+### hello.sh
+
+```bash
+#!/bin/bash
+echo "Hello, DevOps!"
+```
+
+### How to run
 
 ```bash
 chmod +x hello.sh
 ./hello.sh
 ```
 
-**Document:** What happens if you remove the shebang line?
-**Ans:**If I remove the shebang (#!/bin/bash), the script may still work, but not always. 
-           Without the shebang, the system does not know which shell to use.
-           So it may use a default shell (like sh), and some advanced bash commands may fail.
-           Without shebang, bash hello.sh works, but ./hello.sh may fail or give errors.
-     - The script can run in two ways:
-     1. Explicit method: bash hello.sh
-       - It works because we are directly using bash.
-     2. Direct execution: ./hello.sh
-       - It may fail or run with a different shell if the shebang is not present.
+### Output
+
+```
+Hello, DevOps!
+```
+
+### What I learned
+
+If we remove `#!/bin/bash`, the script may not run correctly because system may not know which shell to use.
 
 ---
 
-### Task 2: Variables
-1. Create `variables.sh` with:
-   - A variable for your `NAME`
-   - A variable for your `ROLE` (e.g., "DevOps Engineer")
-   - Print: `Hello, I am <NAME> and I am a <ROLE>`
-2. Try using single quotes vs double quotes — what's the difference?
-   - Single quotes ' ' do NOT allow variable expansion: Because single quotes treat everything as plain text.
-   - Double quotes " " Variables work ($NAME, $ROLE): Because double quotes allow variables to expand (replace with value).
+## Task 2: Variables
+
+### variables.sh
+
+```bash
+#!/bin/bash
+NAME="Suraj"
+ROLE="DevOps Engineer"
+echo "Hello, I am $NAME and I am a $ROLE"
+```
+
+### Output
+
+```
+Hello, I am Suraj and I am a DevOps Engineer
+```
+
+### What I learned
+
+- Variables store data
+- Double quotes allow variable values
+- Single quotes do not replace variables
 
 ---
 
-### Task 3: User Input with read
-1. Create `greet.sh` that:
-   - Asks the user for their name using `read`
-   - Asks for their favourite tool
-   - Prints: `Hello <name>, your favourite tool is <tool>`
+## Task 3: User Input
+
+### greet.sh
+
+```bash
+#!/bin/bash
+echo "Enter your name:"
+read name
+echo "Enter your favourite tool:"
+read tool
+echo "Hello $name, your favourite tool is $tool"
+```
+
+### Output
+
+```
+Enter your name:
+Suraj
+Enter your favourite tool:
+Docker
+Hello Suraj, your favourite tool is Docker
+```
+
+### What I learned
+
+We can take input from users using `read`.
 
 ---
 
-### Task 4: If-Else Conditions
-1. Create `check_number.sh` that:
-   - Takes a number using `read`
-   - Prints whether it is **positive**, **negative**, or **zero**
+## Task 4: If-Else Conditions
 
-2. Create `file_check.sh` that:
-   - Asks for a filename
-   - Checks if the file **exists** using `-f`
-   - Prints appropriate message
+### check_number.sh
 
----
+```bash
+#!/bin/bash
+echo "Enter a number:"
+read num
+if [ $num -gt 0 ]; then
+    echo "Positive number"
+elif [ $num -lt 0 ]; then
+    echo "Negative number"
+else
+    echo "Zero"
+fi
+```
 
-### Task 5: Combine It All
-Create `server_check.sh` that:
-1. Stores a service name in a variable (e.g., `nginx`, `sshd`)
-2. Asks the user: "Do you want to check the status? (y/n)"
-3. If `y` — runs `systemctl status <service>` and prints whether it's **active** or **not**
-4. If `n` — prints "Skipped."
+### file_check.sh
 
----
+```bash
+#!/bin/bash
+echo "Enter filename:"
+read file
+if [ -f "$file" ]; then
+    echo "File exists"
+else
+    echo "File does not exist"
+fi
+```
 
-## Hints
-- Shebang: `#!/bin/bash` tells the system which interpreter to use
-- Variables: `NAME="Shubham"` (no spaces around `=`)
-- Read: `read -p "Enter name: " NAME`
-- If syntax: `if [ condition ]; then ... elif ... else ... fi`
-- File check: `if [ -f filename ]; then`
+### What I learned
 
----
-
-## Documentation
-
-Create `day-16-shell-scripting.md` with:
-- Each script's code and output
-- What you learned (3 key points)
-
----
-
-## Submission
-1. Add your scripts and `day-16-shell-scripting.md` to `2026/day-16/`
-2. Commit and push to your fork
+- `if-else` helps to make decisions in scripts
+- We can check numbers and files
 
 ---
 
-## Learn in Public
+## Task 5: Server Check Script
 
-Share your first shell scripts on LinkedIn.
+### server_check.sh
 
-`#90DaysOfDevOps` `#DevOpsKaJosh` `#TrainWithShubham`
+```bash
+#!/bin/bash
+service="nginx"
+echo "Do you want to check service status? (y/n)"
+read choice
+if [ "$choice" = "y" ]; then
+    if systemctl is-active --quiet "$service"; then
+        echo "$service is RUNNING"
+    else
+        echo "$service is NOT RUNNING"
+    fi
+else
+    echo "Skipped"
+fi
+```
 
-Happy Learning!
-**TrainWithShubham**
+### What I learned
+
+We can check system services using scripts and automate server monitoring.
+
+---
+
+## Final Learning (Why this is useful)
+
+- Shell scripting is very useful in Linux and DevOps
+- It helps automate daily tasks
+- It reduces human error
+- It makes work faster and easier
