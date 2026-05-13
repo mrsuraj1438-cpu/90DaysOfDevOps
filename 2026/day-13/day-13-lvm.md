@@ -93,19 +93,13 @@ pvs
 
 ```bash
 vgcreate backup /dev/nvme1n1
-```
-
-### Output
-
-![vgcreate output](Screenshot(706).png)
-
-```bash
 vgs
 ```
 
 ### Output
 
-![vgs output](Screenshot(706).png)
+
+![vgcreate output](Screenshot(706).png)
 
 ---
 
