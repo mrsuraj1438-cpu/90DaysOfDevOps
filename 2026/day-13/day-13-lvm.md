@@ -117,7 +117,7 @@ lvs
 
 ### Output
 
-![lvs output](images/lvs.png)
+![lvs output](logical_volume.png)
 
 ---
 
@@ -128,10 +128,6 @@ lvs
 ```bash
 mkfs.ext4 /dev/devops-vg/app-data
 ```
-
-### Output
-
-![mkfs output](images/mkfs.png)
 
 ```bash
 mkdir -p /mnt/app-data
@@ -144,7 +140,7 @@ df -h /mnt/app-data
 
 ### Output
 
-![mount output](images/mount.png)
+![mount output](mount.png)
 
 ---
 
@@ -157,16 +153,12 @@ lvextend -L +200M /dev/devops-vg/app-data
 ```
 
 ```bash
-resize2fs /dev/devops-vg/app-data
-```
-
-```bash
-df -h /mnt/app-data
+df -h /mnt/dev_lv
 ```
 
 ### Output
 
-![extend output](images/extend.png)
+![extend output](extend.png)
 
 ---
 
@@ -185,22 +177,6 @@ df -h /mnt/app-data
 * Logical Volume (LV)
 * Dynamic storage management
 * Flexible resizing without repartition
-
----
-
-## Submission Steps
-
-* Save file as `day-13-lvm.md`
-* Place in `2026/day-13/`
-* Commit and push to GitHub
-
----
-
-## Note
-
-Make sure to replace all `images/*.png` with your actual screenshots after running commands.
-
----
 
 ## Hashtags
 
