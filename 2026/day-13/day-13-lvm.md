@@ -99,7 +99,7 @@ vgs
 ### Output
 
 
-![vgcreate output](Screenshot(706).png)
+![vgcreate output](vg.png)
 
 ---
 
