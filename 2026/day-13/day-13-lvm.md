@@ -77,14 +77,6 @@ pvcreate /dev/nvme1n1
 
 ![pvcreate output](lv.png)
 
-```bash
-pvs
-```
-
-### Output
-
-![pvs output](images/pvs.png)
-
 ---
 
 ## Task 3: Create Volume Group
@@ -108,7 +100,7 @@ vgs
 **Intro:** Create a flexible virtual partition from the Volume Group that will act like a real disk.
 
 ```bash
-lvcreate -L 500M -n app-data devops-vg
+lvcreate -L 4g -n Dev backup
 ```
 
 ```bash
@@ -126,16 +118,16 @@ lvs
 **Intro:** Format the Logical Volume with a filesystem and mount it to make it usable in the directory structure.
 
 ```bash
-mkfs.ext4 /dev/devops-vg/app-data
+mkfs.ext4 /dev/backup/Dev
 ```
 
 ```bash
-mkdir -p /mnt/app-data
-mount /dev/devops-vg/app-data /mnt/app-data
+mkdir -p /mnt/dev_lv
+mount /dev/backup/Dev /mnt/dev_lv
 ```
 
 ```bash
-df -h /mnt/app-data
+df -h /mnt/dev_lv
 ```
 
 ### Output
@@ -149,7 +141,7 @@ df -h /mnt/app-data
 **Intro:** Increase the size of the Logical Volume and resize filesystem without stopping services.
 
 ```bash
-lvextend -L +200M /dev/devops-vg/app-data
+lvextend -L +1g /dev/backup/Dev
 ```
 
 ```bash
