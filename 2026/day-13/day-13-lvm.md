@@ -92,12 +92,12 @@ pvs
 **Intro:** Combine one or more Physical Volumes into a single storage pool called a Volume Group.
 
 ```bash
-vgcreate devops-vg /dev/sdb
+vgcreate backup /dev/nvme1n1
 ```
 
 ### Output
 
-![vgcreate output](images/vgcreate.png)
+![vgcreate output](Screenshot(706).png)
 
 ```bash
 vgs
