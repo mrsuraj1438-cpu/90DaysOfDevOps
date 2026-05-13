@@ -105,7 +105,7 @@ vgs
 
 ### Output
 
-![vgs output](images/vgs.png)
+![vgs output](Screenshot(706).png)
 
 ---
 
