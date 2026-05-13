@@ -31,7 +31,7 @@ Add volume
 
 ### Output
 
-![dd output](images/dd-output.png)
+![dd output](instance.png)
 
 
 ### Output
