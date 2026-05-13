@@ -61,7 +61,7 @@ df -h
 
 ### Output
 
-![storage overview](images/storage-overview.png)
+![storage overview](pvs_lvs_vgs.png)
 
 ---
 
