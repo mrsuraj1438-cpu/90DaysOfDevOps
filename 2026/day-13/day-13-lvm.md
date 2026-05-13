@@ -36,7 +36,7 @@ Add volume
 
 ### Output
 
-![loop device output](images/losetup-output.png)
+![loop device output](volume_add.png)
 
 ---
 
@@ -50,7 +50,7 @@ lsblk
 
 ### Output
 
-![lsblk output](images/lsblk.png)
+![lsblk output](lsblk.png)
 
 ```bash
 pvs
@@ -70,12 +70,12 @@ df -h
 **Intro:** Initialize a raw disk or partition into a Physical Volume so that LVM can manage it.
 
 ```bash
-pvcreate /dev/sdb   # or /dev/loop0
+pvcreate /dev/nvme1n1  
 ```
 
 ### Output
 
-![pvcreate output](images/pvcreate.png)
+![pvcreate output](lv.png)
 
 ```bash
 pvs
